@@ -5,6 +5,7 @@ public class DFACollapse {
         int size = checkSize(); //return # of states
         String[][] dfa = addDFA(size); //return dfa in 2d array
         List<String> pairs = addPair(dfa, size); //return valid pairs into arraylist
+        pairs = iteratePairs(dfa, pairs, size);
     }
 
     public static int checkSize() throws FileNotFoundException {
@@ -46,4 +47,14 @@ public class DFACollapse {
         return pairs;
     }
 
+    public static List<String> iteratePairs(String[][] dfa, List<String> pairs, int size) {
+        int i = 0;
+        while (pairs.iterator().hasNext()) {
+            String pair = pairs.iterator().next();
+            Scanner token = new Scanner(pair);
+
+            i++;
+        }
+        return pairs;
+    }
 }
