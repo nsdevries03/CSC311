@@ -51,7 +51,6 @@ public class DFACollapse {
     public static List<String> removePairs(Map<String, String> dfa, List<String> pairs) {
         Map<String, String> newPairs = new HashMap<>();
         List<String> result = new ArrayList<>();
-        Integer i = 0;
         while (!pairs.isEmpty()) {
             String pair = pairs.iterator().next();
             Scanner token = new Scanner(pair);
