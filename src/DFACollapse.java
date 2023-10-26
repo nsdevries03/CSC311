@@ -3,9 +3,9 @@ import java.util.*;
 public class DFACollapse {
     public static void main(String[] args) throws FileNotFoundException {
         int size = checkSize(); //return # of states
-        String[][] dfa = addDFA(size); //return dfa in 2d array
+        Map<String, String> dfa = addDFA(); //return dfa in 2d array
         List<String> pairs = addPair(dfa, size); //return valid pairs into arraylist
-        pairs = iteratePairs(dfa, pairs, size);
+        pairs = removePairs(dfa, pairs);
     }
 
     public static int checkSize() throws FileNotFoundException {
@@ -19,26 +19,27 @@ public class DFACollapse {
         return i - 1;
     }
 
-    public static String[][] addDFA(int i) throws FileNotFoundException {
-        String[][] dfa = new String[3][i];
+    public static Map<String, String> addDFA() throws FileNotFoundException {
+        Map<String, String> dfa = new HashMap<>();
         Scanner file = new Scanner(new File("dfa.txt"));
         file.nextLine();
-        int j = 0;
+        Integer j = 0;
         while (file.hasNextLine()) {
-            dfa[0][j] = file.next();
-            dfa[1][j] = file.next();
-            dfa[2][j] = file.next();
+            String x = file.next();
+            dfa.put(j.toString(), x);
+            dfa.put(j.toString() + "A", file.next());
+            dfa.put(j.toString() + "B", file.next());
             j++;
         }
         file.close();
         return dfa;
     }
 
-    public static List<String> addPair(String[][] dfa, int size) {
+    public static List<String> addPair(Map<String, String> dfa, int size) {
         List<String> pairs = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            for (int j = i + 1; j < size; j++) {
-                String x = dfa[0][i] + " " + dfa[0][j];
+        for (Integer i = 0; i < size; i++) {
+            for (Integer j = i + 1; j < size; j++) {
+                String x =  dfa.get(i.toString()) + " " + dfa.get(j.toString());
                 if (x.length() == 3 || x.length() == 5) {
                     pairs.add(x);
                 }
@@ -47,14 +48,30 @@ public class DFACollapse {
         return pairs;
     }
 
-    public static List<String> iteratePairs(String[][] dfa, List<String> pairs, int size) {
-        int i = 0;
-        while (pairs.iterator().hasNext()) {
+    public static List<String> removePairs(Map<String, String> dfa, List<String> pairs) {
+        Map<String, String> newPairs = new HashMap<>();
+        List<String> result = new ArrayList<>();
+        Integer i = 0;
+        while (!pairs.isEmpty()) {
             String pair = pairs.iterator().next();
             Scanner token = new Scanner(pair);
+            String x = token.next();
+            Character y = x.charAt(0);
+            String a = dfa.get(y.toString() + "A") + " ";
+            String b = dfa.get(y.toString() + "B") + " ";
+            x = token.next();
+            y = x.charAt(0);
+            newPairs.put(pair + "A", a + dfa.get(y.toString() + "A"));
+            newPairs.put(pair + "B", b + dfa.get(y.toString() + "B"));
 
-            i++;
+            if ((newPairs.get(pair + "A").length() == 3 || newPairs.get(pair + "A").length() == 5) &&
+                    (newPairs.get(pair + "B").length() == 3 || newPairs.get(pair + "B").length() == 5) &&
+                    (newPairs.get(pair + "A").length() == newPairs.get(pair + "B").length()))  {
+                result.add(pair);
+            }
+
+            pairs.remove(pair);
         }
-        return pairs;
+        return result;
     }
 }
