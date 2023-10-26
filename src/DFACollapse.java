@@ -5,7 +5,7 @@ public class DFACollapse {
         int size = checkSize(); //return # of states
         Map<String, String> dfa = addDFA(); //return dfa in 2d array
         List<String> pairs = addPair(dfa, size); //return valid pairs into arraylist
-        pairs = removePairs(dfa, pairs);
+        pairs = removePairs(dfa, pairs, size);
     }
 
     public static int checkSize() throws FileNotFoundException {
@@ -48,7 +48,7 @@ public class DFACollapse {
         return pairs;
     }
 
-    public static List<String> removePairs(Map<String, String> dfa, List<String> pairs) {
+    public static List<String> removePairs(Map<String, String> dfa, List<String> pairs, int size) {
         Map<String, String> newPairs = new HashMap<>();
         List<String> result = new ArrayList<>();
         while (!pairs.isEmpty()) {
@@ -66,6 +66,13 @@ public class DFACollapse {
             if ((newPairs.get(pair + "A").length() == 3 || newPairs.get(pair + "A").length() == 5) &&
                     (newPairs.get(pair + "B").length() == 3 || newPairs.get(pair + "B").length() == 5) &&
                     (newPairs.get(pair + "A").length() == newPairs.get(pair + "B").length()))  {
+//                List<String> tempPairs = new ArrayList<>(pairs);
+//                for (Integer i = 0; i < size; i++) {
+//                    tempPairs.add(dfa.get(i.toString()) + " " + dfa.get(i.toString()));
+//                }
+//                if (tempPairs.contains(newPairs.get(pair + "A")) && tempPairs.contains(newPairs.get(pair + "B"))) {
+//                    result.add(pair);
+//                }
                 result.add(pair);
             }
 
