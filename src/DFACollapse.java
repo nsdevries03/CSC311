@@ -63,6 +63,7 @@ public class DFACollapse {
             newPairs.put(pair + "A", a + dfa.get(y.toString() + "A"));
             newPairs.put(pair + "B", b + dfa.get(y.toString() + "B"));
 
+            /*
             if ((newPairs.get(pair + "A").length() == 3 || newPairs.get(pair + "A").length() == 5) &&
                     (newPairs.get(pair + "B").length() == 3 || newPairs.get(pair + "B").length() == 5) &&
                     (newPairs.get(pair + "A").length() == newPairs.get(pair + "B").length()))  {
@@ -75,6 +76,7 @@ public class DFACollapse {
                     result.remove(z);
                 }
             }
+            */
 
             pairs.remove(pair);
         }
