@@ -23,12 +23,12 @@ public class DFACollapse {
         Map<String, String> dfa = new HashMap<>();
         Scanner file = new Scanner(new File("dfa.txt"));
         file.nextLine();
-        Integer j = 0;
+        int j = 0;
         while (file.hasNextLine()) {
             String x = file.next();
-            dfa.put(j.toString(), x);
-            dfa.put(j.toString() + "A", file.next());
-            dfa.put(j.toString() + "B", file.next());
+            dfa.put(Integer.toString(j), x);
+            dfa.put(Integer.toString(j) + "A", file.next());
+            dfa.put(Integer.toString(j) + "B", file.next());
             j++;
         }
         file.close();
@@ -37,9 +37,9 @@ public class DFACollapse {
 
     public static List<String> addPair(Map<String, String> dfa, int size) {
         List<String> pairs = new ArrayList<>();
-        for (Integer i = 0; i < size; i++) {
-            for (Integer j = i + 1; j < size; j++) {
-                String x =  dfa.get(i.toString()) + " " + dfa.get(j.toString());
+        for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j < size; j++) {
+                String x =  dfa.get(Integer.toString(i)) + " " + dfa.get(Integer.toString(j));
                 if (x.length() == 3 || x.length() == 5) {
                     pairs.add(x);
                 }
@@ -55,13 +55,13 @@ public class DFACollapse {
             String pair = pairs.iterator().next();
             Scanner token = new Scanner(pair);
             String x = token.next();
-            Character y = x.charAt(0);
-            String a = dfa.get(y.toString() + "A") + " ";
-            String b = dfa.get(y.toString() + "B") + " ";
+            char y = x.charAt(0);
+            String a = dfa.get(Character.toString(y) + "A") + " ";
+            String b = dfa.get(Character.toString(y) + "B") + " ";
             x = token.next();
             y = x.charAt(0);
-            newPairs.put(pair + "A", a + dfa.get(y.toString() + "A"));
-            newPairs.put(pair + "B", b + dfa.get(y.toString() + "B"));
+            newPairs.put(pair + "A", a + dfa.get(Character.toString(y) + "A"));
+            newPairs.put(pair + "B", b + dfa.get(Character.toString(y) + "B"));
 
             /*
             if ((newPairs.get(pair + "A").length() == 3 || newPairs.get(pair + "A").length() == 5) &&
